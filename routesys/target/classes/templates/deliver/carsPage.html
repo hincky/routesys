@@ -1,0 +1,46 @@
+<!doctype html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>优化结果页面</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <div th:replace="fragment/page::source"></div>
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=8Ucmkc0SodbDNzcBe9NIGleB9h8rmplj"></script>
+
+</head>
+<body>
+<div th:replace="fragment/page::x-nav"></div>
+<div th:replace="fragment/page::tableAndToolBarExeptTableData"></div>
+<script type="text/javascript"  th:inline="none">
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#test'
+            ,url:'/getAllCars'
+            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                ,layEvent: 'LAYTABLE_TIPS'
+                ,icon: 'layui-icon-tips'
+            }]
+            ,cols: [[
+                {type: 'checkbox',   fixed: 'left', width:'10%',align: 'center'}
+                ,{field:'type',title: '车辆类型',width:'15%',align: 'center'}                //商品编号
+                ,{field:'oilType',title: '油品',width:'10%',align: 'center'}             //商品编号
+                ,{field:'maxMile',   title: '最大里程',  width:'15%', align: 'center'}      //价格
+                ,{field:'maxLoad',  title: '最大载重', width:'10%',align: 'center'}               //在售状态
+                ,{field:'maxSpeed',  title: '最大时速',width:'20%',align: 'center'}           //库存数量
+            ]]
+            ,page: true //开启分页
+            ,limits:[3,5]
+            ,limit:5
+        });
+    });
+</script>
+
+
+</body>
+</html>

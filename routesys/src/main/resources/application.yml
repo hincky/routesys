@@ -1,0 +1,64 @@
+ spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/route?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  thymeleaf:
+    prefix:
+        classpath: /templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false   #关闭模板引擎的缓存
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+ logging:
+   path: E://routesys/log.log
+
+ mybatis:
+   configuration:
+     map-underscore-to-camel-case: true #数据库的下划线自动转换成驼峰
+   mapper-locations: classpath:generator/**/*.xml  #存放sql语句的配置文件路径，自动加载成mybatis的映射文件
+
+ # 配置文件的真实位置
+#  messages:
+#    basename: i18n.login
+
+#配置首页
+#server:
+#  servlet:
+#    context-path: /hincky
+
+ pagehelper:
+   # dialect: ①
+   # 分页插件会自动检测当前的数据库链接，自动选择合适的分页方式（可以不设置）
+   helper-dialect: mysql
+   # 上面数据库设置后，下面的设置为true不会改变上面的结果（默认为true）
+   auto-dialect: true
+   page-size-zero: false # ②
+   reasonable: true # ③
+   # 默认值为 false，该参数对使用 RowBounds 作为分页参数时有效。（一般用不着）
+   offset-as-page-num: false
+   # 默认值为 false，RowBounds是否进行count查询（一般用不着）
+   row-bounds-with-count: false
+   #params: ④
+   #support-methods-arguments: 和params配合使用，具体可以看下面的讲解
+   # 默认值为 false。设置为 true 时，允许在运行时根据多数据源自动识别对应方言的分页
+   auto-runtime-dialect: false # ⑤
+   # 与auto-runtime-dialect配合使用
+   close-conn: true
+   # 用于控制默认不带 count 查询的方法中，是否执行 count 查询，这里设置为true后，total会为-1
+   default-count: false
+   #dialect-alias: ⑥
+   support-methods-arguments: true
+   params: count=countSql
+
+
+
+

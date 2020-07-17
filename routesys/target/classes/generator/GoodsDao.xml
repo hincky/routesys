@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hincky.routesys.dao.GoodsDao">
+  <resultMap id="BaseResultMap" type="com.hincky.routesys.pojo.entity.Goods">
+    <id column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="price" jdbcType="REAL" property="price" />
+    <result column="on_sale" jdbcType="VARCHAR" property="onSale" />
+    <result column="detail" jdbcType="VARCHAR" property="detail" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="weight" jdbcType="REAL" property="weight" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    goods_id, goods_name, price, on_sale, detail, `count`, weight
+  </sql>
+  <sql id="Form_Column_List">
+    goods_id, goods_name, price, on_sale, detail, `count`, weight
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+    <select id="findAll" resultType="com.hincky.routesys.pojo.entity.Goods">
+        select * from goods
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="goods_id" keyProperty="goodsId" parameterType="com.hincky.routesys.pojo.entity.Goods" useGeneratedKeys="true">
+    insert into goods (goods_name, price, on_sale, 
+      detail, `count`, weight)
+    values (#{goodsName,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{onSale,jdbcType=VARCHAR}, 
+      #{detail,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, #{weight,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" keyColumn="goods_id" keyProperty="goodsId" parameterType="com.hincky.routesys.pojo.entity.Goods" useGeneratedKeys="true">
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="onSale != null">
+        on_sale,
+      </if>
+      <if test="detail != null">
+        detail,
+      </if>
+      <if test="count != null">
+        `count`,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="onSale != null">
+        #{onSale,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hincky.routesys.pojo.entity.Goods">
+    update goods
+    <set>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="onSale != null">
+        on_sale = #{onSale,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null">
+        `count` = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=REAL},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hincky.routesys.pojo.entity.Goods">
+    update goods
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      on_sale = #{onSale,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      `count` = #{count,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=REAL}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+</mapper>

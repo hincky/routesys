@@ -1,0 +1,168 @@
+<!doctype html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>路径测试页面</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <div th:replace="fragment/page::source"></div>
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=8Ucmkc0SodbDNzcBe9NIGleB9h8rmplj"></script>
+</head>
+<body>
+<div th:replace="fragment/page::x-nav"></div>
+<div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");    // 创建Map实例
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+    //添加地图类型控件
+    map.addControl(new BMap.MapTypeControl({
+        mapTypes:[//地图类型的选择（正常、混合）
+            BMAP_NORMAL_MAP,
+            BMAP_HYBRID_MAP
+        ]}));
+    map.setCurrentCity("广州");          // 设置地图显示的城市 此项是必须设置的
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+    var time;
+    var distance;
+
+    var driving = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true}});
+    var p0 = new BMap.Point(113.330111,23.122935);//起始，坐标为12
+    var p1 = new BMap.Point(113.317027,23.122773);//3
+    driving.search(p0, p1);//waypoints表示途经点
+    // driving.search(start, end,{waypoints:[p1]});//waypoints表示途经点
+
+
+
+    var output = "从p0到p1驾车需要";
+    var searchComplete = function (results){
+        if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+            return ;
+        }
+        var plan = results.getPlan(0);
+        output += plan.getDuration(true) + "\n";                //获取时间
+        time = plan.getDuration(true);
+        distance = plan.getDistance(true);
+            output += "总路程为：" ;
+        output += plan.getDistance(true) + "\n";             //获取距离
+
+    }
+
+    var transit = new BMap.DrivingRoute(map, {renderOptions: {map: map},
+        onSearchComplete: searchComplete,
+
+        onPolylinesSet: function(){
+            setTimeout(function(){alert(output),alert(time+distance)},"1000");//1秒后显示弹窗
+        }});
+    transit.search(p0, p1);
+
+
+    // console.log(pointArr);//可以拿到坐标集，且打印有结果
+
+
+    // var distance;//
+    //
+    // var dis ;
+    // var searchComplete = function (results){
+    //     if (transit.getStatus() != BMAP_STATUS_SUCCESS){return ;}
+    //     var plan = results.getPlan(0);//选择下标为0的路径方案，即第一个路径方案
+    //     distance = plan.getDistance(false)/1000;//true显示公里为单位的距离，有公里；false只显示米为单位的距离，没有米
+    // }
+    // var transit = new BMap.DrivingRoute(map, {
+    //     renderOptions: {map: map, autoViewport: true},
+    //     onSearchComplete: searchComplete,
+    //     onPolylinesSet: function() {
+    //         // dis = distance.toString();
+    //         // console.log(distance);
+    //         // dis = {"distance":distance};
+    //         dis= distance.toString();
+    //         console.log(dis);
+    //         $.ajax({
+    //             type:'POST',
+    //             data: dis,//json
+    //             contentType: 'application/json',
+    //             dataType:'json',
+    //             url:'/sentDistance',
+    //             success:function(){
+    //             }
+    //         });
+    //     }});
+    // // transit.search(start, end,{waypoints:[p1]});//waypoints表示途经点
+    // transit.search(pointArr[12], pointArr[13]);
+    // console.log(dis);//undefined，拿不到
+
+    //定义一个二维数组作为距离矩阵
+    // var matrix = new Array();
+    // for(var i=0;i<pointArr.length;i++){        //一维长度为pointArr.length
+    //     matrix[i] = new Array();
+    //     for(var j=0;j<pointArr.length;j++){    //二维长度为pointArr.length
+    //         matrix[i][j] = i+j;
+    //     }
+    // }
+    //
+    // for (var i=0;i<pointArr.length;i++){
+    //     for (var j = 0;j<pointArr.length;j++){
+    //         if ((i == j)||(i>j)){//去除相同和位置互换重复的组合
+    //             matrix[i][j] = 0;//不作计算的位置赋值为0.0
+    //             continue;
+    //         } else {
+    //             var point1 = pointArr[i];
+    //             var point2 = pointArr[j];
+    //             // double distance = getDistance(point1,point2);
+    //             transit.search(point1, point2);
+    //             matrix[i][j] = [[${distance}]];
+    //         }
+    //     }
+    // }
+    // for (var i =0;i<pointArr.length;i++){
+    //     for (var j = 0;j<pointArr.length;j++){
+    //         if (i==j)//去除相同和位置互换重复的组合
+    //             continue;
+    //         else if(i>j){
+    //             matrix[i][j] = matrix[j][i];//关于对角线对称的值都相等了
+    //         }
+    //     }
+    // }
+    // console.log(matrix);
+</script>
+<!--// $.ajax({-->
+<!--//     type:'POST',-->
+<!--//     data: distance,//json-->
+<!--//     contentType: 'application/json',-->
+<!--//     dataType:'json',-->
+<!--//     url:'/sentDistance',-->
+<!--//     success:function(data){-->
+<!--//         alert("发送成功");-->
+<!--//     },-->
+<!--//     error:function(e){-->
+<!--//         alert("发送失败");-->
+<!--//     }-->
+<!--// });-->
+<!--//-->
+<!--// var dis = {dis:distance};-->
+<!--// var xhr = new XMLHttpRequest();//第一步：建立所需的对象-->
+<!--// xhr.setRequestHeader("Content-Type", "application/json");   //设置请求头信息-->
+<!--// xhr.open("POST", "/sentDistance", true);  //调用AddDataToServer-->
+<!--// xhr.send(dis);-->
+
+<!--var searchComplete = function (results){-->
+<!--if (transit.getStatus() != BMAP_STATUS_SUCCESS){return ;}-->
+<!--var plan = results.getPlan(0);//选择下标为0的路径方案，即第一个路径方案-->
+<!--distance = plan.getDistance(false);//true显示公里为单位的距离，有公里；false只显示米为单位的距离，没有米-->
+<!--}-->
+<!--var transit = new BMap.DrivingRoute(map, {-->
+<!--renderOptions: {map: map, autoViewport: true},-->
+<!--onSearchComplete: searchComplete,-->
+<!--onPolylinesSet: function() {-->
+<!--// console.log("aa"+distance);//可以打印-->
+<!--// setTimeout(function(){-->
+<!--//     // alert(distance);-->
+<!--//     console.log(distance);//只可以在函数内打印，在外面会undefined-->
+<!--// },"1000");//1秒后显示弹窗-->
+<!--dis = distance.toString();-->
+<!--console.log(dis);-->
+<!--}});-->

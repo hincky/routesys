@@ -1,0 +1,42 @@
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="fragment/page::source"></div>
+    <title>会员页面</title>
+
+</head>
+
+<body>
+<div th:replace="fragment/page::x-nav"></div>
+<div th:replace="fragment/page::tableAndToolBarExeptTableData"></div>
+  <script type="text/javascript"  th:inline="none">
+    layui.use('table', function(){
+      var table = layui.table;
+
+      table.render({
+        elem: '#test'
+        ,url:'/getUserPage'
+        ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+          title: '提示'
+          ,layEvent: 'LAYTABLE_TIPS'
+          ,icon: 'layui-icon-tips'
+        }]
+        ,cols: [[
+          {type: 'checkbox', fixed: 'left',    width:'10%',align: 'center'}
+          ,{field:'userId',  title: '用户编号',width:'10%',align: 'center' }                  //用户编号
+          ,{field:'realName',title: '名称',    width:'10%',align: 'center'  }                 //名称
+          ,{field:'phone',   title: '联系方式',width:'15%',align: 'center'}                   //联系方式
+          ,{field:'lastLoginTime',title: '上次登录时间',width:'15%',align: 'center'}          //上次登录时间
+          ,{field:'lastLoginIp',  title: '登录IP',width:'10%',align: 'center'  }              //登录IP
+          ,{field:'address',      title: '地址',  width:'15%',align: 'center'  }              //地址
+          ,{fixed:'right',        title:'操作', toolbar: '#barDemo', width:'15%',align: 'center'} //操作 8
+        ]]
+        ,page: true //开启分页
+        ,limits:[5,10,15,20]
+        ,limit:5
+      });
+    });
+  </script>
+
+</body>
+</html>

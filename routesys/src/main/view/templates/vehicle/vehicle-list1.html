@@ -1,0 +1,42 @@
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="fragment/page::source"></div>
+    <title>车辆页面</title>
+
+</head>
+
+<body>
+<div th:replace="fragment/page::x-nav"></div>
+<div th:replace="fragment/page::tableAndToolBarExeptTableData"></div>
+  <script type="text/javascript"  th:inline="none">
+    layui.use('table', function(){
+      var table = layui.table;
+      table.render({
+        elem: '#test'
+        ,url:'/getVehiclePage'
+        ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+          title: '提示'
+          ,layEvent: 'LAYTABLE_TIPS'
+          ,icon: 'layui-icon-tips'
+        }]
+        ,cols: [[
+          {type: 'checkbox',   fixed: 'left',    width:'10%',align: 'center'}
+          ,{field:'vehicleId',title: '车辆编号',width:'10%' ,align: 'center'}                   //车辆编号
+          ,{field:'type',      title: '类型',    width:'8%' ,align: 'center'}                   //类型
+          ,{field:'oilType',  title: '油品',    width:'10%',align: 'center'}                    //油品
+          ,{field:'maxMile',  title: '最大里程 km',width:'12%',align: 'center'}                 //最大里程
+          ,{field:'maxLoad',  title: '最大载重 kg',width:'10%',align: 'center'}                 //最大载重
+          ,{field:'maxSpeed', title: '限速 km/h',    width:'10%',align: 'center'}               //限速
+          ,{field:'status',    title: '状态',    width:'10%',align: 'center'}                   //状态
+          ,{fixed:'right',     title:'操作', toolbar: '#barDemo', width:'20%',align: 'center'}  //操作 9
+        ]]
+        ,page: true //开启分页
+        ,limits:[3,5]
+        ,limit:5
+      });
+    });
+  </script>
+
+  </body>
+</html>

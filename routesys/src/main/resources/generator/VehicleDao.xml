@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hincky.routesys.dao.VehicleDao">
+  <resultMap id="BaseResultMap" type="com.hincky.routesys.pojo.entity.Vehicle">
+    <id column="vehicle_id" jdbcType="INTEGER" property="vehicleId" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="oil_type" jdbcType="VARCHAR" property="oilType" />
+    <result column="max_mile" jdbcType="INTEGER" property="maxMile" />
+    <result column="max_load" jdbcType="REAL" property="maxLoad" />
+    <result column="max_speed" jdbcType="INTEGER" property="maxSpeed" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    vehicle_id, `type`, oil_type, max_mile, max_load, max_speed, `status`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vehicle
+    where vehicle_id = #{vehicleId,jdbcType=INTEGER}
+  </select>
+    <select id="findAll" resultType="com.hincky.routesys.pojo.entity.Vehicle">
+      select * from vehicle
+    </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from vehicle
+    where vehicle_id = #{vehicleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="vehicle_id" keyProperty="vehicleId" parameterType="com.hincky.routesys.pojo.entity.Vehicle" useGeneratedKeys="true">
+    insert into vehicle (`type`, oil_type, max_mile, 
+      max_load, max_speed, `status`
+      )
+    values (#{type,jdbcType=VARCHAR}, #{oilType,jdbcType=VARCHAR}, #{maxMile,jdbcType=INTEGER}, 
+      #{maxLoad,jdbcType=REAL}, #{maxSpeed,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="vehicle_id" keyProperty="vehicleId" parameterType="com.hincky.routesys.pojo.entity.Vehicle" useGeneratedKeys="true">
+    insert into vehicle
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="oilType != null">
+        oil_type,
+      </if>
+      <if test="maxMile != null">
+        max_mile,
+      </if>
+      <if test="maxLoad != null">
+        max_load,
+      </if>
+      <if test="maxSpeed != null">
+        max_speed,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="oilType != null">
+        #{oilType,jdbcType=VARCHAR},
+      </if>
+      <if test="maxMile != null">
+        #{maxMile,jdbcType=INTEGER},
+      </if>
+      <if test="maxLoad != null">
+        #{maxLoad,jdbcType=REAL},
+      </if>
+      <if test="maxSpeed != null">
+        #{maxSpeed,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hincky.routesys.pojo.entity.Vehicle">
+    update vehicle
+    <set>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="oilType != null">
+        oil_type = #{oilType,jdbcType=VARCHAR},
+      </if>
+      <if test="maxMile != null">
+        max_mile = #{maxMile,jdbcType=INTEGER},
+      </if>
+      <if test="maxLoad != null">
+        max_load = #{maxLoad,jdbcType=REAL},
+      </if>
+      <if test="maxSpeed != null">
+        max_speed = #{maxSpeed,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where vehicle_id = #{vehicleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hincky.routesys.pojo.entity.Vehicle">
+    update vehicle
+    set `type` = #{type,jdbcType=VARCHAR},
+      oil_type = #{oilType,jdbcType=VARCHAR},
+      max_mile = #{maxMile,jdbcType=INTEGER},
+      max_load = #{maxLoad,jdbcType=REAL},
+      max_speed = #{maxSpeed,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=VARCHAR}
+    where vehicle_id = #{vehicleId,jdbcType=INTEGER}
+  </update>
+</mapper>

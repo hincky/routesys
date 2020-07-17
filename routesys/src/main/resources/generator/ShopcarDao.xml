@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hincky.routesys.dao.ShopcarDao">
+  <resultMap id="BaseResultMap" type="com.hincky.routesys.pojo.entity.Shopcar">
+    <id column="shop_car_id" jdbcType="INTEGER" property="shopCarId" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="price" jdbcType="REAL" property="price" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="total" jdbcType="REAL" property="total" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="weight" jdbcType="REAL" property="weight" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    shop_car_id, goods_name, price, `count`, total, user_id, goods_id, weight
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shopcar
+    where shop_car_id = #{shopCarId,jdbcType=INTEGER}
+  </select>
+    <select id="findAllByUserId" parameterType="java.lang.Integer" resultType="com.hincky.routesys.pojo.entity.Shopcar">
+      select * from shopcar
+      where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+  <select id="findAll" resultType="com.hincky.routesys.pojo.entity.Shopcar">
+    select * from shopcar
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from shopcar
+    where shop_car_id = #{shopCarId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="shop_car_id" keyProperty="shopCarId" parameterType="com.hincky.routesys.pojo.entity.Shopcar" useGeneratedKeys="true">
+    insert into shopcar (goods_name, price, `count`, 
+      total, user_id, goods_id, 
+      weight)
+    values (#{goodsName,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{count,jdbcType=INTEGER}, 
+      #{total,jdbcType=REAL}, #{userId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
+      #{weight,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" keyColumn="shop_car_id" keyProperty="shopCarId" parameterType="com.hincky.routesys.pojo.entity.Shopcar" useGeneratedKeys="true">
+    insert into shopcar
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="count != null">
+        `count`,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=REAL},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hincky.routesys.pojo.entity.Shopcar">
+    update shopcar
+    <set>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="count != null">
+        `count` = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=REAL},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=REAL},
+      </if>
+    </set>
+    where shop_car_id = #{shopCarId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hincky.routesys.pojo.entity.Shopcar">
+    update shopcar
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      `count` = #{count,jdbcType=INTEGER},
+      total = #{total,jdbcType=REAL},
+      user_id = #{userId,jdbcType=INTEGER},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=REAL}
+    where shop_car_id = #{shopCarId,jdbcType=INTEGER}
+  </update>
+</mapper>

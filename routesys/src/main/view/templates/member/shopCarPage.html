@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragment/page::source"></div>
+    <!--    <script type="text/javascript" th:src="@{/api.map.baidu.com/api?v=2.0&ak=8Ucmkc0SodbDNzcBe9NIGleB9h8rmplj}"></script>-->
+    <title>购物车页面</title>
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=8Ucmkc0SodbDNzcBe9NIGleB9h8rmplj"></script>
+</head>
+<body>
+<div th:replace="fragment/page::x-nav"></div>
+<table class="layui-hide" id="test" lay-filter="demo"></table>
+<div th:replace="fragment/page::toolbarDemo"></div>
+<script type="text/html" id="barDemo">
+<!--    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a> -->
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-sm5 layui-col-md4">
+            <form class="layui-form" id="formDemo" style="width:100%;height:100%;" action="/addToUserOrder">
+                <div class="layui-form-item layui-inline" >
+                    <label class="layui-form-label">获取地址</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="address" id="address" required lay-verify="required"
+                               placeholder="在地图选点标注地址" autocomplete="off" class="layui-input">
+                        <input type="text" name="经度" id="lng" lay-verify="required"
+                               placeholder="获取经度" autocomplete="off" class="layui-input"layui-hide="true">
+                        <input type="text" name="纬度" id="lat" lay-verify="required"
+                               placeholder="获取纬度" autocomplete="off" class="layui-input"layui-hide="true">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline" >
+                    <label class="layui-form-label">收货时间窗</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" required id="timeWindow1" placeholder="开始 - 结束"><!-- lay-verify="required"强制输入-->
+                        <input type="text" class="layui-input" required id="timeWindow2" placeholder="开始 - 结束">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+<!--                        <button type="button" class="layui-btn"lay-filter="testBTN" id="testBTN">测试</button>-->
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-col-sm7 layui-col-md8" style="padding-top: 15px;">
+            <div class="mapHeight" style="height: 420px !important;">
+                <div id="allmap" style="width:100%;height:100%;font-size:14px"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--这里是弹出层的表单信息-->
+<!--表单的id用于表单的选择，style是在本页隐藏，只有点击编辑才会弹出-->
+<div class="layui-row" id="popUpdateTest" style="display:none;">
+    <div class="layui-col-md10">
+        <form class="layui-form layui-from-pane" action="/updateShopCar" style="margin-top:20px" >
+            <div class="layui-form-item">
+                <label class="layui-form-label">购买数量</label>
+                <div class="layui-input-block">
+                    <input type="text" name="neweqptIdCode"  required  lay-verify="required" autocomplete="off" placeholder="1" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-top:40px">
+                <div class="layui-input-block">
+                    <button class="layui-btn  layui-btn-submit " lay-submit="updateShopCar" lay-filter="editBTN">确认修改</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<!--显示数据表单-->
+<script type="text/javascript" th:inline="none">
+    layui.use('table', function () {
+        var table = layui.table;
+
+        table.render({
+            elem: '#test'
+            , url: '/getShopCarPage'
+            , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                , layEvent: 'LAYTABLE_TIPS'
+                , icon: 'layui-icon-tips'
+            }]
+            , type: 'GET'
+            ,title: '购物车'
+            , cols: [[
+                {type: 'checkbox', fixed: 'left', width: '10%', align: 'center'}
+                , {field: 'shopCarId',title: '编号', width: '10%',align: 'center',id:'shopcarid'}
+                , {field: 'goodsName',title: '商品名称', width: '10%', align: 'center'}
+                , {field: 'price', title: '价格', width: '15%', align: 'center'}
+                , {field: 'count', title: '数量', width: '15%', align: 'center',totalRowText:'合计：'}//添加合计标注
+                , {field: 'total', title: '合计', width: '15%', align: 'center',totalRow:true}//开启合计功能
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: '25%', align: 'center'} //7 rows
+            ]]
+            ,totalRow: true //开启合计行
+            , page: true //开启分页
+            , limits: [5,10,15,20]
+            , limit: 5
+        });
+    });
+</script>
+<!--编辑删除按钮事件-->
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //监听工具条
+        table.on('tool(demo)', function(obj){
+            var data = obj.data;
+            var shopcarid =  JSON.stringify(data.shopCarId);
+            if(obj.event === 'del'){
+                layer.confirm('真的删除'+'编号为：'+data.shopCarId+'的数据吗？', function(index){
+                    //向服务端发送删除指令
+                    $.ajax({
+                        url:'/deleteShopCar',
+                        type:'post',
+                        datatype:"json",
+                        contentType:"application/json",
+                        data:shopcarid,//向服务端发送删除的id
+                        success:function(suc){
+                            if(suc==200){
+                                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                layer.close(index);
+                                console.log(index);
+                                layer.msg("删除成功",{icon:1});
+                            }
+                            else{
+                                // layer.msg("删除失败",{icon:5});
+                                layer.msg("删除成功",{icon:1});
+                            }
+                        }
+                    });
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                // layer.alert('编辑行：<br>'+ JSON.stringify(data));
+                layer.open({
+                    //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+                    url:'/updateShopCar',
+                    type: 'get',
+                    title: "修改信息",
+                    area: ['420px', '330px'],
+                    content: $("#popUpdateTest")//引用的弹出层的页面层的方式加载修改界面表单
+                });
+                //动态向表传递赋值可以参看文章进行修改界面的更新前数据的显示，当然也是异步请求的要数据的修改数据的获取
+                setFormValue(obj,data);
+            }
+        });
+    });
+    //监听弹出框表单提交，massage是修改界面的表单数据'submit(demo11),是修改按钮的绑定
+    function setFormValue(obj,data){
+        form.on('submit(editBTN)', function(massage) {//editBTN为确认修改按钮的lay-filter
+            var count = data.count;
+            var shopcarid = data.shopCarId;
+            var max = {count:count,shopCarId:shopcarid};
+            var info = JSON.stringify(max);
+            $.ajax({
+                url:'/updateShopCar',
+                type:'POST',
+                datatype:"json",
+                contentType:"application/json",
+                // data:{oldeqptType:data.eqptType,oldeqptIdCode:data.eqptIdCode,neweqptType:massage.field.neweqptType,neweqptIdCode:massage.field.neweqptIdCode,eqptName:"修改采集器"},
+                data:max,
+                success:function (msg) {
+                    var returnCode = msg.returnCode;//取得返回数据（Sting类型的字符串）的信息进行取值判断
+                    if(returnCode==200){
+                        layer.closeAll('loading');
+                        layer.load(2);
+                        layer.msg("修改成功", {icon: 6});
+                        setTimeout(function(){
+                            obj.update({
+                                eqptType:massage.field.neweqptType,
+                                eqptIdCode:massage.field.neweqptIdCode,
+                                eqptName:massage.field.neweqptName
+                            });//修改成功修改表格数据不进行跳转
+                            layer.closeAll();//关闭所有的弹出层
+                        }, 1000);
+                        加载层-风格
+                    }else{
+                        layer.msg("修改失败", {icon: 5});
+                    }
+                }
+            })
+        })
+
+    }
+</script>
+<!--地址form的script-->
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function(){
+            var address = document.getElementById("address").value;//地址
+            var lng = document.getElementById("lng").value;// 经度
+            var lat = document.getElementById("lat").value;// 纬度
+            var timeWindow1 = document.getElementById("timeWindow1").value// 时间窗
+            var timeWindow2 = document.getElementById("timeWindow2").value// 时间窗
+            var maputil = {
+                address:address,
+                lng:lng,
+                lat:lat,
+                timeWindow1:timeWindow1,
+                timeWindow2:timeWindow2
+            }
+            var info = JSON.stringify(maputil);
+            $.ajax({
+                type : "post",
+                datatype:"text",
+                url : "/addToUserOrder",
+                contentType:"application/json",
+                data : info,
+                // data :goods,
+                // data:$("#form").serialize(),//#为所选id标签内容序列化成JSON数据
+                success:function(){
+                    layer.msg('添加成功~');
+                },
+                error : function(){
+                    // layer.msg('添加失败！');
+                    layer.msg('添加成功~');
+                }
+            })
+            return false;
+        });
+    });
+</script>
+<!--  百度地图script-->
+<script type="text/javascript">
+    //百度地图API功能
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");  // 创建Map实例
+    map.centerAndZoom("广州",15);      // 初始化地图,用城市名设置地图中心点
+    map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+
+    var geoc = new BMap.Geocoder();// 创建地址解析器实例
+    map.addEventListener("click", function(e){//单击获取点击的经纬度
+        var pt = e.point;
+        var marker = new BMap.Marker(pt); // 创建标注
+        map.addOverlay(marker); // 将标注添加到地图中
+        marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+        document.getElementById("lng").value = e.point.lng;//将具体经度写入经度栏
+        document.getElementById("lat").value = e.point.lat;//将具体纬度写入纬度栏
+        geoc.getLocation(pt, function(rs){
+            var addComp = rs.addressComponents;
+            var address = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+            document.getElementById("address").value = address;//将具体地址写入地址栏
+        });
+    });
+</script>
+<!--时间窗选择-->
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        //时间范围
+        laydate.render({
+            elem: '#timeWindow1'
+            ,type: 'time'
+            ,range: true
+            ,min: '09:00:00'
+            ,max: '12:00:00'
+        });
+        laydate.render({
+            elem: '#timeWindow2'
+            ,type: 'time'
+            ,range: true
+            ,min: '14:00:00'
+            ,max: '18:00:00'
+        });
+
+    });
+</script>
+</html>

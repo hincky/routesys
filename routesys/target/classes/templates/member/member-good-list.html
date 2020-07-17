@@ -1,0 +1,142 @@
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="fragment/page::source"></div>
+    <title>商品列表</title>
+
+</head>
+
+<body>
+<div th:replace="fragment/page::x-nav"></div>
+<div class="x-body">
+<!--  <input id="userId" th:src="${session.userId}">-->
+  <table class="layui-hide" id="test" lay-filter="demo"></table>
+
+</div>
+
+  <script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+      <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+      <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+      <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+    </div>
+  </script>
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="addCar">购物车</a>
+  </script>
+  <script type="text/javascript"  th:inline="none">
+    layui.use('table',function(){
+      var table = layui.table;
+      // var userId = document.getElementById('userId');
+      // var userID =  eval("(" +$("userId").html()+ ")");
+      // var userId = $('#userId');
+      // var uId = $(${session.userId});
+      table.render({
+        elem: '#test'
+        ,url:'/getGoodsPage'
+        ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+        ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+          title: '提示'
+          ,layEvent: 'LAYTABLE_TIPS'
+          ,icon: 'layui-icon-tips'
+        }]
+        ,cols: [[
+          {type: 'checkbox',   fixed: 'left', width:'10%',align: 'center'}
+          ,{field:'goodsId',title: '商品编号',width:'10%',align: 'center'}                //商品编号
+          ,{field:'goodsName',title: '商品名称',width:'15%',align: 'center'}              //商品编号
+          ,{field:'price',   title: '价格',  width:'10%', sort: true,align: 'center'}     //价格
+          ,{field:'onSale',  title: '在售状态', width:'10%',align: 'center'}              //在售状态
+          ,{field:'detail',  title: '商品描述',width:'20%',align: 'center'}               //商品描述
+          ,{field:'count',   title: '库存数量',width:'10%',align: 'center'}               //库存数量
+          // ,{field:'spare',   title: '用户id',width:80,align: 'center',templet:function(){ //用户id
+          //     // return $('userId').html();
+          //     // return  eval("(" +$("userId").html()+ ")");
+          //     return  $('#userId');
+          //   }}
+          // ,{field:'spare',   title: '用户id',width:80,align: 'center',templet:'<p>${session.userId}</p>'}
+          ,{fixed:'right',   title:'操作', toolbar: '#barDemo', width:'15%'} //操作
+        ]]
+        ,page: true //开启分页
+        ,limits:[5,10,15,20]
+        ,limit:5
+      });
+    });
+  layui.use('table', function(){
+    var table = layui.table;
+    //监听表格复选框选择
+    table.on('checkbox(demo)', function(obj){
+      console.log(obj)
+    });
+    //监听工具条
+    table.on('tool(demo)', function(obj){
+
+      // var userId = document.getElementById("userId");
+      // var userID =  eval("(" +$("userId").html()+ ")");
+      // var goods = {
+      //   goodsName:goodsInfo["goodsName"],
+      //   price:goodsInfo["price"],
+      //   count:goodsInfo["count"],
+      //   total:goodsInfo["total"],
+      //   spare:$('#userId'),
+      //   goodsId:goodsInfo["goodsId"]
+      // };
+      var goodsInfo = JSON.stringify(obj.data);
+      if(obj.event === 'addCar'){
+        $.ajax({
+          type : "post",
+          datatype:"json",
+          url : "/addToShopCar",
+          contentType:"application/json",
+          data : goodsInfo,
+          // data :goods,
+          // data:$("#form").serialize(),//#为所选id标签内容序列化成JSON数据
+          success:function(){
+            layer.msg('添加成功~');
+          },
+          error : function(){
+            layer.msg('添加成功~');
+          },
+          // complete : function(){
+          //   layer.close(index);
+          // },
+        })
+      } else if(obj.event === 'edit'){
+        // layer.alert('编辑行：<br>'+ JSON.stringify(data));
+        // layer.msg($('#userId'));
+        // layer.msg(eval("(" +$("userId").html()+ ")"));
+
+      }
+    });
+
+    //头工具栏事件
+    table.on('toolbar(demo)', function(obj){
+      var checkStatus = table.checkStatus(obj.config.id);
+      switch(obj.event){
+        case 'getCheckData':
+          var data = checkStatus.data;
+          layer.alert(JSON.stringify(data));
+          break;
+        case 'getCheckLength':
+          var data = checkStatus.data;
+          layer.msg('选中了：'+ data.length + ' 个');
+          break;
+        case 'isAll':
+          layer.msg(checkStatus.isAll ? '全选': '未全选');
+          break;
+
+              //自定义头工具栏右侧图标 - 提示
+        case 'LAYTABLE_TIPS':
+          layer.alert('这是工具栏右侧自定义的一个图标按钮');
+          break;
+      };
+    });
+
+    $('.demoTable .layui-btn').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+  });
+</script>
+
+  </body>
+</html>

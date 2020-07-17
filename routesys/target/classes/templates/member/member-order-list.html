@@ -1,0 +1,41 @@
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="fragment/page::source"></div>
+  <title>用户个人订单列表</title>
+</head>
+
+<body>
+<div th:replace="fragment/page::x-nav"></div>
+<div th:replace="fragment/page::tableAndToolBarExeptTableData"></div>
+<script type="text/javascript"  th:inline="none">
+  layui.use('table', function(){
+    var table = layui.table;
+
+    table.render({
+      elem: '#test'
+      ,url:'/getUserOrderPage'
+      ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+      ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+        title: '提示'
+        ,layEvent: 'LAYTABLE_TIPS'
+        ,icon: 'layui-icon-tips'
+      }]
+      ,cols: [[
+        {type: 'checkbox',   fixed: 'left', width:'10%',align: 'center'}
+        ,{field:'receiverName',title: '收件人',width:'10%',align: 'center'}                //商品编号
+        ,{field:'receiverPhone',title: '联系方式',width:'10%',align: 'center'}             //商品编号
+        ,{field:'destination',   title: '收货地址',  width:'15%', align: 'center'}      //价格
+        ,{field:'earliestAccTime',  title: '最早收货时间', width:'10%',align: 'center'}               //在售状态
+        ,{field:'latestAccTime',  title: '最迟收货时间', width:'10%',align: 'center'}               //在售状态
+        ,{field:'details',  title: '订单详情',width:'20%',align: 'center'}           //库存数量
+        ,{fixed:'right',   title:'操作', toolbar: '#barDemo', width:'15%'} //操作
+      ]]
+      ,page: true //开启分页
+      ,limits:[3,5]
+      ,limit:5
+    });
+  });
+</script>
+</body>
+
+</html>

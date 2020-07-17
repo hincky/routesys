@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <div th:replace="fragment/page::source"></div>
+        <title>欢迎页面</title>
+    </head>
+    <body>
+    <div class="x-body">
+        <blockquote class="layui-elem-quote">欢迎：
+            <span class="x-red" th:text="${session.realName}"></span>
+            <span  th:text="'当前时间:'+${session.time}"></span>
+        </blockquote>
+        <fieldset class="layui-elem-field">
+            <legend>数据统计</legend>
+            <div class="layui-field-box">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body">
+                            <div class="layui-carousel x-admin-carousel x-admin-backlog" lay-anim=""
+                                 lay-indicator="inside" lay-arrow="none" style="width: 100%; height: 90px;">
+                                <div carousel-item="">
+                                    <ul class="layui-row layui-col-space10 layui-this">
+                                        <li class="layui-col-xs2">
+                                            <a href="javascript:;" class="x-admin-backlog-body">
+                                                <h3>完成订单数</h3>
+                                                <p>
+                                                    <cite>43</cite></p>
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs2">
+                                            <a href="javascript:;" class="x-admin-backlog-body">
+                                                <h3>会员数</h3>
+                                                <p>
+                                                    <cite>12</cite></p>
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs2">
+                                            <a href="javascript:;" class="x-admin-backlog-body">
+                                                <h3>车辆数</h3>
+                                                <p>
+                                                    <cite>99</cite></p>
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs2">
+                                            <a href="javascript:;" class="x-admin-backlog-body">
+                                                <h3>商品数</h3>
+                                                <p>
+                                                    <cite>67</cite></p>
+<!--                                                    <cite th:value="${}">67</cite></p>-->
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs2">
+                                            <a href="javascript:;" class="x-admin-backlog-body">
+                                                <h3>司机数</h3>
+                                                <p>
+<!--                                                    <cite th:value="${}">67</cite></p>-->
+                                                    <cite>67</cite></p>
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs2">
+                                            <a href="javascript:;" class="x-admin-backlog-body">
+                                                <h3>剩余未送订单数</h3>
+                                                <p>
+<!--                                                    <cite th:value="${}">6766</cite></p>-->
+                                                    <cite >6766</cite></p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="layui-elem-field">
+            <legend>系统开发方</legend>
+            <div class="layui-field-box">
+                <table class="layui-table">
+                    <tbody>
+                        <tr>
+                            <th>版权所有</th>
+                            <td>广东药科大学(杨樱杰)
+<!--                                <a href="#" class='x-a' target="_blank">访问官网</a></td>-->
+                        </tr>
+                        <tr>
+                            <th>开发者</th>
+                            <td>杨樱杰(897390135@qq.com)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </fieldset>
+    </div>
+    </body>
+</html>

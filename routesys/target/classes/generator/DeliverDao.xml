@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hincky.routesys.dao.DeliverDao">
+  <resultMap id="BaseResultMap" type="com.hincky.routesys.pojo.entity.Deliver">
+    <id column="deliver_id" jdbcType="INTEGER" property="deliverId" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="deliver_name" jdbcType="VARCHAR" property="deliverName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    deliver_id, `password`, deliver_name, phone
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from deliver
+    where deliver_id = #{deliverId,jdbcType=INTEGER}
+  </select>
+    <select id="countDeliver" resultType="java.lang.Integer">
+      select count(*) from deliver
+      where deliver_id != null
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from deliver
+    where deliver_id = #{deliverId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="deliver_id" keyProperty="deliverId" parameterType="com.hincky.routesys.pojo.entity.Deliver" useGeneratedKeys="true">
+    insert into deliver (`password`, deliver_name, phone
+      )
+    values (#{password,jdbcType=VARCHAR}, #{deliverName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="deliver_id" keyProperty="deliverId" parameterType="com.hincky.routesys.pojo.entity.Deliver" useGeneratedKeys="true">
+    insert into deliver
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="deliverName != null">
+        deliver_name,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverName != null">
+        #{deliverName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hincky.routesys.pojo.entity.Deliver">
+    update deliver
+    <set>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverName != null">
+        deliver_name = #{deliverName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where deliver_id = #{deliverId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hincky.routesys.pojo.entity.Deliver">
+    update deliver
+    set `password` = #{password,jdbcType=VARCHAR},
+      deliver_name = #{deliverName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR}
+    where deliver_id = #{deliverId,jdbcType=INTEGER}
+  </update>
+</mapper>

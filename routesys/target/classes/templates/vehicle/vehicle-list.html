@@ -1,0 +1,394 @@
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="fragment/page::source"></div>
+    <title>车辆页面</title>
+  </head>
+  
+  <body>
+  <div th:replace="fragment/page::x-nav"></div>
+    <div class="x-body">
+
+<!--      <div class="layui-row">-->
+<!--        <form class="layui-form layui-col-md12 x-so" id="vehiclePageForm">-->
+<!--          <input class="layui-input"  autocomplete="off" placeholder="开始日" name="start" id="start">-->
+<!--          <input class="layui-input"  autocomplete="off" placeholder="截止日" name="end" id="end">-->
+<!--          <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">-->
+<!--          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>-->
+<!--        </form>-->
+<!--      </div>  &lt;!&ndash;搜索栏&ndash;&gt;-->
+      <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn" onclick="x_admin_show({title : '添加用户', url : './member-add.html', w : 600, h : 400})"><i class="layui-icon"></i>添加</button>
+        <span class="x-right" style="line-height:40px" >共有数据： 条</span>
+      </xblock>
+      <table class="layui-table x-admin" id="test">
+        <thead>
+          <tr>
+            <th>
+              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+            </th>
+            <th>车辆编号</th>
+            <th>类型</th>
+            <th>油品</th>
+            <th>最大里程</th>
+            <th>最大载重</th>
+            <th>限速</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>              <!--分页表头-->
+        <tbody  id="vTbody">               <!--分页主体数据-->
+
+        </tbody>
+      </table>
+      <div id="pageDiv"></div>  <!--分页表底移动栏-->
+<!--      <div class="page">-->
+<!--        <div>-->
+<!--          <a class="prev" href="">&lt;&lt;</a>-->
+<!--          <a class="num" href="">1</a>-->
+<!--          <span class="current">2</span>-->
+<!--          <a class="num" href="">3</a>-->
+<!--          <a class="next" href="">&gt;&gt;</a>-->
+<!--        </div>-->
+<!--      </div>   &lt;!&ndash;分页表底移动栏&ndash;&gt;-->
+
+    </div>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //渲染
+        table.render({
+            elem: '#test'  //绑定table表格
+            ,height: 450
+            ,url: '/getVehicleData' //后台springmvc接收路径
+            ,page:true    //true表示分页
+            /* page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+             layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                 //,curr: 5 //设定初始在第 5 页
+                 ,groups: 3 //只显示 1 个连续页码
+                 ,first: true //不显示首页
+                 ,last: true //不显示尾页
+              }*/
+//            ,where:{rows:limit} //传参数
+            ,limit: 10
+            ,id:'contenttable'
+            ,toolbar: '#toolbarDemo'
+            ,cols: [[
+                 {type: 'checkbox', fixed: 'left'}
+                ,{field:'vehicle_id',title: '车辆编号',width:100 }                 //车辆编号
+                ,{field:'type',      title: '类型',    width:80,  sort: true}      //类型
+                ,{field:'oil_type',  title: '油品',    width:80}                   //油品
+                ,{field:'max_mile',  title: '最大里程', minWidth: 150}             //最大里程
+                ,{field:'max_load',  title: '最大载重',width:80,  sort: true}      //最大载重
+                ,{field:'max_speed', title: '限速',    width:80,  sort: true}      //限速
+                ,{field:'classify',  title: '状态',    width:80}                   //状态
+                // ,{field:'wealth',    title: '操作',    width:135, sort: true}      //操作
+            ]]
+        });
+
+
+
+        //监听表格行点击
+        table.on('tr', function(obj){
+            console.log(obj)
+        });
+
+        //监听表格复选框选择
+        table.on('checkbox(test)', function(obj){
+            console.log(obj)
+        });
+
+        //监听表格单选框选择
+        table.on('radio(test2)', function(obj){
+            console.log(obj)
+        });
+
+        //监听单元格编辑
+        table.on('edit(test2)', function(obj){
+            var value = obj.value //得到修改后的值
+                ,data = obj.data //得到所在行所有键值
+                ,field = obj.field; //得到字段
+
+        });
+
+        //监听工具条
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                    formType: 2
+                    ,value: data.username
+                }, function(value, index){
+                    obj.update({
+                        username: value
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+
+        var $ = layui.jquery, active = {
+            getCheckData: function(){//获取选中数据
+                var checkStatus = table.checkStatus('test')
+                    ,data = checkStatus.data;
+                layer.alert(JSON.stringify(data));
+            }
+            ,getCheckLength: function(){//获取选中数目
+                var checkStatus = table.checkStatus('test')
+                    ,data = checkStatus.data;
+                layer.msg('选中了：'+ data.length + ' 个');
+            }
+            ,isAll: function(){验证是否全选
+                var checkStatus = table.checkStatus('test');
+                layer.msg(checkStatus.isAll ? '全选': '未全选')
+            }
+            ,parseTable: function(){
+                table.init('parse-table-demo', {
+                    limit: 3
+                });
+            }
+            ,add: function(){
+                table.addRow('test')
+            }
+            ,delete: function(){
+                layer.confirm('确认删除吗？', function(index){
+                    table.deleteRow('test')
+                    layer.close(index);
+                });
+            }
+            ,reload:function () {
+                var keyWord=$("#keyWord").val();
+                var keyType=$("#key_type option:selected").val();
+                table.reload('contenttable',{
+                    where:{keyWord:keyWord,keyType:keyType}
+                });
+            }
+        };
+        $('i').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        $('.layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+
+</script>
+<div>
+<!--    <script>-->
+<!--      layui.use('laydate', function(){-->
+<!--        var laydate = layui.laydate;-->
+<!--        -->
+<!--        //执行一个laydate实例-->
+<!--        laydate.render({-->
+<!--          elem: '#start' //指定元素-->
+<!--        });-->
+
+<!--        //执行一个laydate实例-->
+<!--        laydate.render({-->
+<!--          elem: '#end' //指定元素-->
+<!--        });-->
+<!--      });-->
+
+<!--       /*用户-停用*/-->
+<!--      function member_stop(obj,id){-->
+<!--          layer.confirm('确认要停用吗？',function(index){-->
+
+<!--              if($(obj).attr('title')=='启用'){-->
+
+<!--                //发异步把用户状态进行更改-->
+<!--                $(obj).attr('title','停用')-->
+<!--                $(obj).find('i').html('&#xe62f;');-->
+
+<!--                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');-->
+<!--                layer.msg('已停用!',{icon: 5,time:1000});-->
+
+<!--              }else{-->
+<!--                $(obj).attr('title','启用')-->
+<!--                $(obj).find('i').html('&#xe601;');-->
+
+<!--                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');-->
+<!--                layer.msg('已启用!',{icon: 5,time:1000});-->
+<!--              }-->
+<!--              -->
+<!--          });-->
+<!--      }-->
+
+<!--      /*用户-删除*/-->
+<!--      function member_del(obj,id){-->
+<!--          layer.confirm('确认要删除吗？',function(index){-->
+<!--              //发异步删除数据-->
+<!--              $(obj).parents("tr").remove();-->
+<!--              layer.msg('已删除!',{icon:1,time:1000});-->
+<!--          });-->
+<!--      }-->
+
+<!--      /*删除全部*/-->
+<!--      function delAll (argument) {-->
+
+<!--        var data = tableCheck.getData();-->
+<!--  -->
+<!--        layer.confirm('确认要删除吗？'+data,function(index){-->
+<!--            //捉到所有被选中的，发异步进行删除-->
+<!--            layer.msg('删除成功', {icon: 1});-->
+<!--            $(".layui-form-checked").not('.header').parents('tr').remove();-->
+<!--        });-->
+<!--      }-->
+<!--    </script>-->
+
+<!--  <script>-->
+<!--    /*****S 分页查询相关方法**********/-->
+<!--    function queryTrainSchemeFY(){-->
+<!--      $.ajax({-->
+<!--        url:contextPath+"/findList", //controller路径-->
+<!--        data:$("#queryTrainschemeForm").serialize(),        //查询条件中的form名称-->
+<!--        dataType:'json',-->
+<!--        type:'post',-->
+<!--        async:true,-->
+<!--        success:showVehicleTable                            //查询成功就执行下面的分页方法-->
+<!--      });-->
+<!--    }-->
+
+<!--    /**-->
+<!--     * 填充表格数据-->
+<!--     * @param pageInfo  ajax返回的参数信息-->
+<!--     */-->
+<!--    function showVehicleTable(pageInfo){-->
+<!--      // alert(JSON.stringify(pageInfo))-->
+<!--      var total = pageInfo.total;//页总数-->
+<!--      var pageNum = pageInfo.pageNum;//页号-->
+<!--      var pageSize = pageInfo.pageSize;//页大小-->
+
+<!--      var data = pageInfo.list;-->
+
+<!--      $("#vehiclePageTBody").html("");   //清空表格中数据并重新填充数据,名称要与tbody中的对应-->
+<!--      for(var i=0,length_1 = data.length;i<length_1;i++){-->
+<!--        var index = (pageNum - 1) * pageSize + i + 1;-->
+<!--        var tr = "<tr><td>"+'<input type="radio" name="trainshemeRadio" value="'+data[i].trainingSchemeID+'"><input type="hidden" value="'+data[i].trainingSchemeID+'"/></td>'-->
+<!--                +'<td>'+index+'</td>'-->
+<!--                +'<td>'+replaceNull(data[i].trainingSchemaName)+'</td>'-->
+<!--                +'<td>'+replaceNull(data[i].majorName)+'</td>'-->
+<!--                +'<td>'+replaceNull(data[i].majorID)+'</td>'-->
+<!--                +'<td>'+replaceNull(data[i].majorType)+'</td>'-->
+<!--                +'<td>'+replaceNull(data[i].majorManager)+'</td>'-->
+<!--                +'<td>'+replaceNull(data[i].trainYears)+'</td>'-->
+<!--                +'<td>'+replaceNull(data[i].revisePerson)+'</td>'-->
+<!--                +'<td>'+replaceNull(data[i].createTime)+'</td>'-->
+<!--                +'<td>'+replaceNull(data[i].remark1)+'</td>'-->
+<!--                +'<td>'-->
+<!--                +'<a title="点击查看课程详细信息" onclick="openDetailLayer(this)" href=javascript:void(0)><i class="layui-icon">&#xe615;</i></a>'-->
+<!--                +'<a href=javascript:void(0) title="点击修改课程基本信息" onclick="openUpdateLayer(this)"><i class="layui-icon">&#xe642;</i></a>'-->
+<!--                +'<a href=javascript:void(0) title="点击删除课程" onclick="deleteCourseByCourseId(this)"><i class="layui-icon">&#xe640;</i></a>'-->
+<!--                +'</td></tr>'-->
+<!--        $("#vehiclePageTbody").append(tr);-->
+<!--      }-->
+
+
+<!--      function f() {-->
+<!--          function showTable(pageInfo){-->
+<!--              // alert(JSON.stringify(pageInfo))-->
+<!--              var total = pageInfo.total;//页总数-->
+<!--              var pageNum = pageInfo.pageNum;//页号-->
+<!--              var pageSize = pageInfo.pageSize;//页大小-->
+
+<!--              var data = pageInfo.list;-->
+
+<!--              $("#vehiclePageTBody").html("");   //清空表格中数据并重新填充数据,名称要与tbody中的对应-->
+<!--              for(var i=0,length_1 = data.length;i<length_1;i++){-->
+<!--                  var index = (pageNum - 1) * pageSize + i + 1;-->
+<!--                  var tr = "<tr><td>"+'<input type="radio" name="trainshemeRadio" value="'+data[i].trainingSchemeID+'"><input type="hidden" value="'+data[i].trainingSchemeID+'"/></td>'-->
+<!--                      +'<td>'+index+'</td>'-->
+<!--                      +'<td>'+replaceNull(data[i].trainingSchemaName)+'</td>'-->
+<!--                      +'<td>'+replaceNull(data[i].majorName)+'</td>'-->
+<!--                      +'<td>'+replaceNull(data[i].majorID)+'</td>'-->
+<!--                      +'<td>'+replaceNull(data[i].majorType)+'</td>'-->
+<!--                      +'<td>'+replaceNull(data[i].majorManager)+'</td>'-->
+<!--                      +'<td>'+replaceNull(data[i].trainYears)+'</td>'-->
+<!--                      +'<td>'+replaceNull(data[i].revisePerson)+'</td>'-->
+<!--                      +'<td>'+replaceNull(data[i].createTime)+'</td>'-->
+<!--                      +'<td>'+replaceNull(data[i].remark1)+'</td>'-->
+<!--                      +'<td>'-->
+<!--                      +'<a title="点击查看课程详细信息" onclick="openDetailLayer(this)" href=javascript:void(0)><i class="layui-icon">&#xe615;</i></a>'-->
+<!--                      +'<a href=javascript:void(0) title="点击修改课程基本信息" onclick="openUpdateLayer(this)"><i class="layui-icon">&#xe642;</i></a>'-->
+<!--                      +'<a href=javascript:void(0) title="点击删除课程" onclick="deleteCourseByCourseId(this)"><i class="layui-icon">&#xe640;</i></a>'-->
+<!--                      +'</td></tr>'-->
+<!--                  $("#vehiclePageTbody").append(tr);-->
+<!--              }-->
+<!--      }-->
+
+<!--      //开启分页组件-->
+<!--      vehiclesPage(total,pageNum,pageSize);-->
+<!--    }-->
+
+<!--    /**-->
+<!--     * layui的分页插件-->
+<!--     * @param total 总数-->
+<!--     * @param pageNum   当前页-->
+<!--     * @param pageSize  页大小-->
+<!--     */-->
+<!--    function vehiclesPage(total, pageNum, pageSize){-->
+<!--      //使用layui的分页插件-->
+<!--      layui.use(['laypage', 'layer'], function(){-->
+<!--        var laypage = layui.laypage,layer = layui.layer;-->
+
+<!--        //执行一个laypage实例-->
+<!--        laypage.render({-->
+<!--          elem: 'pageDiv', //注意，这里的 test1 是 ID，不用加 # 号-->
+<!--          count: total, //数据总数，从服务端得到-->
+<!--          limit:pageSize,//每页显示的条数。laypage将会借助 count 和 limit 计算出分页数。-->
+<!--          curr:pageNum,//当前页号-->
+<!--          limits:[6,10,15,20],-->
+<!--          layout:['limit','prev', 'page', 'next','skip','count'],//显示哪些分页组件-->
+<!--          jump: function(obj, first){//点击页号的时候执行的函数-->
+<!--            //obj包含了当前分页的所有参数，比如：-->
+<!--            // console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。-->
+<!--            // console.log(obj.limit); //得到每页显示的条数-->
+
+<!--            $("[name='pageNum']").val(obj.curr);//向隐藏域设置当前页的值-->
+<!--            $("[name='pageSize']").val(obj.limit);//向隐藏域设置当前页的大小-->
+<!--            if(!first){//首次不执行(点击的时候才执行)-->
+<!--              queryTrainSchemeFY();//执行查询分页函数(这个函数必须写在这里)-->
+<!--            }-->
+<!--          }-->
+
+<!--        });-->
+<!--      });-->
+<!--    }-->
+
+<!--    /**-->
+<!--     * 点击查询放大镜的事件-->
+<!--     */-->
+<!--    function queryTrainSchemeFYBtn() {-->
+<!--      $("[name='pageNum']").val("");//清空页号-->
+<!--      queryTrainSchemeFY();//分页查询课程信息-->
+<!--    }-->
+<!--    /**-->
+<!--     * 清空查询条件的按钮-->
+<!--     * 1.清空所有的条件，包括隐藏域的条件，2.重新查询一次-->
+<!--     * @param obj   将清空条件按钮自己传下来-->
+<!--     */-->
+<!--    function clearQueryCondition(obj) {-->
+<!--      //1.清空条件-->
+<!--      var form = $(obj).parents("form");-->
+<!--      form.find("input").val("");-->
+<!--      form.find("select").val("");-->
+<!--      //2.重新查询一次-->
+<!--      queryTrainSchemeFY();-->
+<!--    }-->
+<!--    }-->
+<!--    /*****E 分页查询相关方法**********/-->
+<!--  </script>-->
+</div>
+  </body>
+</html>

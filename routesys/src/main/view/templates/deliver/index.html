@@ -1,0 +1,134 @@
+<!doctype html>
+<html class="x-admin-sm" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="fragment/page::source"></div>
+    <title>配送员中心</title>
+</head>
+<body>
+    <!-- 顶部开始 -->
+    <div class="container">
+        <div class="logo"><a href="index">配送员中心</a></div>
+        <div class="left_open">
+            <i title="展开左侧栏" class="iconfont">&#xe699;</i>
+        </div>
+        <ul class="layui-nav left fast-add" lay-filter="">
+          <li class="layui-nav-item">
+            <a href="javascript:;">+新增</a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+              <dd><a onclick="x_admin_show({title : '资讯', url : 'https://www.baidu.com'})"><i class="iconfont">&#xe6a2;</i>资讯</a></dd>
+              <dd><a onclick="x_admin_show({title : '图片', url : 'https://www.baidu.com'})"><i class="iconfont">&#xe6a8;</i>图片</a></dd>
+               <dd><a onclick="x_admin_show({title : '用户 最大化', url : 'https://www.baidu.com', w : '', h : '', full : true})"><i class="iconfont">&#xe6b8;</i>用户最大化</a></dd>
+               <dd><a onclick="x_admin_add_to_tab('在tab打开','https://www.baidu.com',true)"><i class="iconfont">&#xe6b8;</i>在tab打开</a></dd>
+            </dl>
+          </li>
+        </ul>
+        <ul class="layui-nav right" lay-filter="">
+          <li class="layui-nav-item">
+            <a href="javascript:void(0);" th:text="${session.realName}"></a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+              <dd><a onclick="x_admin_show({title : '个人信息', url : 'http://www.baidu.com'})">个人信息</a></dd>
+              <dd><a onclick="x_admin_show({title : '切换帐号', url : 'http://www.baidu.com'})">切换帐号</a></dd>
+              <dd><a th:href="@{/loginPage}">退出</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item to-index"><a href="/">前台首页</a></li>
+        </ul>
+        
+    </div>
+    <div class="left-nav">
+      <div id="side-nav">
+        <ul id="nav">
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe6b8;</i>
+                    <cite>相关信息</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li date-refresh="1">
+                        <a _href="/getAllCar">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>车辆列表</cite>
+                            
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="/allMembersOrders">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>用户订单列表</cite>
+                            
+                        </a>
+                    </li >
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont">&#xe70b;</i>
+                            <cite>个人管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i>
+                        </a>
+                        <ul class="sub-menu">
+                            <li date-refresh="1">
+                                <a _href="/deliverSelfManage">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>个人信息表单</cite>
+
+                                </a>
+                            </li >
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe723;</i>
+                    <cite>路径规划</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="/routePage">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>简单结果显示</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="/routeResultPage">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>优化结果显示</cite>
+                        </a>
+                    </li >
+                </ul>
+            </li>
+        </ul>
+      </div>
+    </div>
+    <!-- <div class="x-slide_left"></div> -->
+    <!-- 左侧菜单结束 -->
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+          <ul class="layui-tab-title">
+            <li class="home"><i class="layui-icon">&#xe68e;</i>我的桌面</li>
+          </ul>/
+          <div class="layui-unselect layui-form-select layui-form-selected" id="tab_right">
+                <dl>
+                    <dd data-type="this">关闭当前</dd>
+                    <dd data-type="other">关闭其它</dd>
+                    <dd data-type="all">关闭全部</dd>
+                </dl>
+          </div>
+          <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <iframe src="/welcome" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+            </div>
+          </div>
+          <div id="tab_show"></div>
+        </div>
+    </div>
+    <div class="page-content-bg"></div>
+    <!-- 右侧主体结束 -->
+    <!-- 中部结束 -->
+    <div th:replace="fragment/page::footer"></div>
+
+
+</body>
+</html>

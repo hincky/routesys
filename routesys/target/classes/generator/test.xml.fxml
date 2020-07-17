@@ -1,0 +1,233 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">-->
+<!--<mapper namespace="com.hincky.routesys.dao.UserOrderDao">-->
+<!--    <resultMap id="BaseResultMap" type="com.hincky.routesys.pojo.entity.UserOrder">-->
+<!--        <id column="order_id" jdbcType="INTEGER" property="orderId" />-->
+<!--        <result column="user_id" jdbcType="INTEGER" property="userId" />-->
+<!--        <result column="all_cost" jdbcType="REAL" property="allCost" />-->
+<!--        <result column="create_time" jdbcType="VARCHAR" property="createTime" />-->
+<!--        <result column="receiver_phone" jdbcType="VARCHAR" property="receiverPhone" />-->
+<!--        <result column="receiver_name" jdbcType="VARCHAR" property="receiverName" />-->
+<!--        <result column="receiver_address" jdbcType="VARCHAR" property="receiverAddress" />-->
+<!--        <result column="time_window1" jdbcType="VARCHAR" property="timeWindow1" />-->
+<!--        <result column="time_window2" jdbcType="VARCHAR" property="timeWindow2" />-->
+<!--        <result column="status" jdbcType="VARCHAR" property="status" />-->
+<!--        <result column="earliest_acc_time" jdbcType="VARCHAR" property="earliestAccTime" />-->
+<!--        <result column="latest_acc_time" jdbcType="VARCHAR" property="latestAccTime" />-->
+<!--        <result column="point" jdbcType="VARCHAR" property="point" />-->
+<!--        <result column="destination" jdbcType="VARCHAR" property="destination" />-->
+<!--    </resultMap>-->
+<!--    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hincky.routesys.pojo.entity.UserOrder">-->
+<!--        <result column="details" jdbcType="LONGVARCHAR" property="details" />-->
+<!--    </resultMap>-->
+<!--    <sql id="Base_Column_List">-->
+<!--        order_id, user_id, all_cost, create_time, receiver_phone, receiver_name, receiver_address,-->
+<!--        time_window1, time_window2, `status`, earliest_acc_time, latest_acc_time, point,-->
+<!--        destination-->
+<!--    </sql>-->
+<!--    <sql id="Blob_Column_List">-->
+<!--        details-->
+<!--    </sql>-->
+
+<!--    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">-->
+<!--        select-->
+<!--        <include refid="Base_Column_List" />-->
+<!--        ,-->
+<!--        <include refid="Blob_Column_List" />-->
+<!--        from user_order-->
+<!--        where order_id = #{orderId,jdbcType=INTEGER}-->
+<!--    </select>-->
+
+
+
+<!--    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">-->
+<!--        delete from user_order-->
+<!--        where order_id = #{orderId,jdbcType=INTEGER}-->
+<!--    </delete>-->
+<!--    <insert id="insert" keyColumn="order_id" keyProperty="orderId" parameterType="com.hincky.routesys.pojo.entity.UserOrder" useGeneratedKeys="true">-->
+<!--        insert into user_order (user_id, all_cost, create_time,-->
+<!--        receiver_phone, receiver_name, receiver_address,-->
+<!--        time_window1, time_window2, `status`,-->
+<!--        earliest_acc_time, latest_acc_time, point,-->
+<!--        destination, details)-->
+<!--        values (#{userId,jdbcType=INTEGER}, #{allCost,jdbcType=REAL}, #{createTime,jdbcType=VARCHAR},-->
+<!--        #{receiverPhone,jdbcType=VARCHAR}, #{receiverName,jdbcType=VARCHAR}, #{receiverAddress,jdbcType=VARCHAR},-->
+<!--        #{timeWindow1,jdbcType=VARCHAR}, #{timeWindow2,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},-->
+<!--        #{earliestAccTime,jdbcType=VARCHAR}, #{latestAccTime,jdbcType=VARCHAR}, #{point,jdbcType=VARCHAR},-->
+<!--        #{destination,jdbcType=VARCHAR}, #{details,jdbcType=LONGVARCHAR})-->
+<!--    </insert>-->
+<!--    <insert id="insertSelective" keyColumn="order_id" keyProperty="orderId" parameterType="com.hincky.routesys.pojo.entity.UserOrder" useGeneratedKeys="true">-->
+<!--        insert into user_order-->
+<!--        <trim prefix="(" suffix=")" suffixOverrides=",">-->
+<!--            <if test="userId != null">-->
+<!--                user_id,-->
+<!--            </if>-->
+<!--            <if test="allCost != null">-->
+<!--                all_cost,-->
+<!--            </if>-->
+<!--            <if test="createTime != null">-->
+<!--                create_time,-->
+<!--            </if>-->
+<!--            <if test="receiverPhone != null">-->
+<!--                receiver_phone,-->
+<!--            </if>-->
+<!--            <if test="receiverName != null">-->
+<!--                receiver_name,-->
+<!--            </if>-->
+<!--            <if test="receiverAddress != null">-->
+<!--                receiver_address,-->
+<!--            </if>-->
+<!--            <if test="timeWindow1 != null">-->
+<!--                time_window1,-->
+<!--            </if>-->
+<!--            <if test="timeWindow2 != null">-->
+<!--                time_window2,-->
+<!--            </if>-->
+<!--            <if test="status != null">-->
+<!--                `status`,-->
+<!--            </if>-->
+<!--            <if test="earliestAccTime != null">-->
+<!--                earliest_acc_time,-->
+<!--            </if>-->
+<!--            <if test="latestAccTime != null">-->
+<!--                latest_acc_time,-->
+<!--            </if>-->
+<!--            <if test="point != null">-->
+<!--                point,-->
+<!--            </if>-->
+<!--            <if test="destination != null">-->
+<!--                destination,-->
+<!--            </if>-->
+<!--            <if test="details != null">-->
+<!--                details,-->
+<!--            </if>-->
+<!--        </trim>-->
+<!--        <trim prefix="values (" suffix=")" suffixOverrides=",">-->
+<!--            <if test="userId != null">-->
+<!--                #{userId,jdbcType=INTEGER},-->
+<!--            </if>-->
+<!--            <if test="allCost != null">-->
+<!--                #{allCost,jdbcType=REAL},-->
+<!--            </if>-->
+<!--            <if test="createTime != null">-->
+<!--                #{createTime,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="receiverPhone != null">-->
+<!--                #{receiverPhone,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="receiverName != null">-->
+<!--                #{receiverName,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="receiverAddress != null">-->
+<!--                #{receiverAddress,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="timeWindow1 != null">-->
+<!--                #{timeWindow1,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="timeWindow2 != null">-->
+<!--                #{timeWindow2,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="status != null">-->
+<!--                #{status,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="earliestAccTime != null">-->
+<!--                #{earliestAccTime,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="latestAccTime != null">-->
+<!--                #{latestAccTime,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="point != null">-->
+<!--                #{point,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="destination != null">-->
+<!--                #{destination,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="details != null">-->
+<!--                #{details,jdbcType=LONGVARCHAR},-->
+<!--            </if>-->
+<!--        </trim>-->
+<!--    </insert>-->
+<!--    <update id="updateByPrimaryKeySelective" parameterType="com.hincky.routesys.pojo.entity.UserOrder">-->
+<!--        update user_order-->
+<!--        <set>-->
+<!--            <if test="userId != null">-->
+<!--                user_id = #{userId,jdbcType=INTEGER},-->
+<!--            </if>-->
+<!--            <if test="allCost != null">-->
+<!--                all_cost = #{allCost,jdbcType=REAL},-->
+<!--            </if>-->
+<!--            <if test="createTime != null">-->
+<!--                create_time = #{createTime,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="receiverPhone != null">-->
+<!--                receiver_phone = #{receiverPhone,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="receiverName != null">-->
+<!--                receiver_name = #{receiverName,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="receiverAddress != null">-->
+<!--                receiver_address = #{receiverAddress,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="timeWindow1 != null">-->
+<!--                time_window1 = #{timeWindow1,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="timeWindow2 != null">-->
+<!--                time_window2 = #{timeWindow2,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="status != null">-->
+<!--                `status` = #{status,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="earliestAccTime != null">-->
+<!--                earliest_acc_time = #{earliestAccTime,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="latestAccTime != null">-->
+<!--                latest_acc_time = #{latestAccTime,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="point != null">-->
+<!--                point = #{point,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="destination != null">-->
+<!--                destination = #{destination,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="details != null">-->
+<!--                details = #{details,jdbcType=LONGVARCHAR},-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        where order_id = #{orderId,jdbcType=INTEGER}-->
+<!--    </update>-->
+<!--    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hincky.routesys.pojo.entity.UserOrder">-->
+<!--        update user_order-->
+<!--        set user_id = #{userId,jdbcType=INTEGER},-->
+<!--        all_cost = #{allCost,jdbcType=REAL},-->
+<!--        create_time = #{createTime,jdbcType=VARCHAR},-->
+<!--        receiver_phone = #{receiverPhone,jdbcType=VARCHAR},-->
+<!--        receiver_name = #{receiverName,jdbcType=VARCHAR},-->
+<!--        receiver_address = #{receiverAddress,jdbcType=VARCHAR},-->
+<!--        time_window1 = #{timeWindow1,jdbcType=VARCHAR},-->
+<!--        time_window2 = #{timeWindow2,jdbcType=VARCHAR},-->
+<!--        `status` = #{status,jdbcType=VARCHAR},-->
+<!--        earliest_acc_time = #{earliestAccTime,jdbcType=VARCHAR},-->
+<!--        latest_acc_time = #{latestAccTime,jdbcType=VARCHAR},-->
+<!--        point = #{point,jdbcType=VARCHAR},-->
+<!--        destination = #{destination,jdbcType=VARCHAR},-->
+<!--        details = #{details,jdbcType=LONGVARCHAR}-->
+<!--        where order_id = #{orderId,jdbcType=INTEGER}-->
+<!--    </update>-->
+<!--    <update id="updateByPrimaryKey" parameterType="com.hincky.routesys.pojo.entity.UserOrder">-->
+<!--        update user_order-->
+<!--        set user_id = #{userId,jdbcType=INTEGER},-->
+<!--        all_cost = #{allCost,jdbcType=REAL},-->
+<!--        create_time = #{createTime,jdbcType=VARCHAR},-->
+<!--        receiver_phone = #{receiverPhone,jdbcType=VARCHAR},-->
+<!--        receiver_name = #{receiverName,jdbcType=VARCHAR},-->
+<!--        receiver_address = #{receiverAddress,jdbcType=VARCHAR},-->
+<!--        time_window1 = #{timeWindow1,jdbcType=VARCHAR},-->
+<!--        time_window2 = #{timeWindow2,jdbcType=VARCHAR},-->
+<!--        `status` = #{status,jdbcType=VARCHAR},-->
+<!--        earliest_acc_time = #{earliestAccTime,jdbcType=VARCHAR},-->
+<!--        latest_acc_time = #{latestAccTime,jdbcType=VARCHAR},-->
+<!--        point = #{point,jdbcType=VARCHAR},-->
+<!--        destination = #{destination,jdbcType=VARCHAR}-->
+<!--        where order_id = #{orderId,jdbcType=INTEGER}-->
+<!--    </update>-->
+<!--</mapper>-->

@@ -1,0 +1,30 @@
+<!doctype html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragment/page::source"></div>
+    <title>登录页面</title>
+</head>
+<body class="login-bg">
+    <div class="login layui-anim layui-anim-up">
+        <div class="message">登录</div>
+<!--        <div id="darkbannerwrap"></div>-->
+        <hr class="hr15">
+        <form id="loginForm" method="post" class="layui-form" th:action="@{/home}">
+            <input th:name="username" lay-verify="required" th:placeholder="用户名" type="text" class="layui-input" >
+            <hr class="hr15">
+            <input th:name="password" lay-verify="required" th:placeholder="密码"  type="password" class="layui-input">
+            <hr class="hr15">
+            <select name="identity" lay-verify="" type="text">
+                <option value="user">用户</option>
+                <option value="deliver">配送员</option>
+                <option value="admin">管理员</option>
+            </select>
+            <hr class="hr15">
+            <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
+            <hr class="hr15" >
+            <a href="/registerPage" class="layui-btn layui-col-xs12 layui-bg-blue" target="_blank">注册</a>
+        </form>
+    </div>
+
+</body>
+</html>
