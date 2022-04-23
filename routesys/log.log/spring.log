@@ -1,3 +1,0 @@
-2020-05-19 10:25:50.421  INFO 11868 --- [Thread-34] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
-2020-05-19 10:25:50.663  INFO 11868 --- [Thread-34] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
-2020-05-19 10:25:50.714  INFO 11868 --- [Thread-34] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
