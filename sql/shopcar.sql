@@ -1,0 +1,12 @@
+INSERT INTO `shopcar`(`shop_car_id`, `goods_name`, `price`, `count`, `total`, `user_id`, `goods_id`, `weight`) VALUES (34, '剃须刀', 99.00, 1, 99.00, 1001, 2, 0.3);
+INSERT INTO `shopcar`(`shop_car_id`, `goods_name`, `price`, `count`, `total`, `user_id`, `goods_id`, `weight`) VALUES (35, '无线鼠标', 89.00, 1, 89.00, 1001, 4, 0.1);
+INSERT INTO `shopcar`(`shop_car_id`, `goods_name`, `price`, `count`, `total`, `user_id`, `goods_id`, `weight`) VALUES (36, '扫地机器人', 1599.00, 1, 1599.00, 1001, 12, 2.3);
+INSERT INTO `shopcar`(`shop_car_id`, `goods_name`, `price`, `count`, `total`, `user_id`, `goods_id`, `weight`) VALUES (38, '剃须刀', 99.00, 1, 99.00, 1002, 2, 0.3);
+INSERT INTO `shopcar`(`shop_car_id`, `goods_name`, `price`, `count`, `total`, `user_id`, `goods_id`, `weight`) VALUES (40, '无线鼠标', 89.00, 1, 89.00, 1002, 4, 0.1);
+INSERT INTO `shopcar`(`shop_car_id`, `goods_name`, `price`, `count`, `total`, `user_id`, `goods_id`, `weight`) VALUES (43, '儿童学步车', 239.00, 1, 239.00, 1002, 11, 4.5);
+INSERT INTO `shopcar`(`shop_car_id`, `goods_name`, `price`, `count`, `total`, `user_id`, `goods_id`, `weight`) VALUES (44, '智能吹风机', 699.00, 1, 699.00, 1002, 15, 0.8);
+INSERT INTO `shopcar`(`shop_car_id`, `goods_name`, `price`, `count`, `total`, `user_id`, `goods_id`, `weight`) VALUES (45, '剃须刀', 99.00, 1, 99.00, 1004, 2, 0.3);
+INSERT INTO `shopcar`(`shop_car_id`, `goods_name`, `price`, `count`, `total`, `user_id`, `goods_id`, `weight`) VALUES (46, '迷你小风扇', 56.00, 1, 56.00, 1004, 3, 0.3);
+INSERT INTO `shopcar`(`shop_car_id`, `goods_name`, `price`, `count`, `total`, `user_id`, `goods_id`, `weight`) VALUES (47, '双肩背包', 130.00, 1, 130.00, 1004, 5, 1.0);
+INSERT INTO `shopcar`(`shop_car_id`, `goods_name`, `price`, `count`, `total`, `user_id`, `goods_id`, `weight`) VALUES (48, 'Roland Xps-10', 3400.00, 1, 3400.00, 1004, 9, 12.0);
+INSERT INTO `shopcar`(`shop_car_id`, `goods_name`, `price`, `count`, `total`, `user_id`, `goods_id`, `weight`) VALUES (49, '一次性外科医用口罩', 1.50, 1, 1.50, 1001, 7, 0.1);

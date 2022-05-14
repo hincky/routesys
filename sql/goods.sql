@@ -1,0 +1,15 @@
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (1, '红豆吐司', 5.00, '在售', '红豆吐司片，营养美味', 20, 0.5);
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (2, '剃须刀', 99.00, '在售', '电动剃须刀，刮得干净，用得省心', 5, 0.3);
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (3, '迷你小风扇', 56.00, '在售', '风力大，续航久，清凉一夏', 10, 0.3);
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (4, '无线鼠标', 89.00, '在售', '静音好，手感好，告别鼠标手', 5, 0.1);
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (5, '双肩背包', 130.00, '在售', '轻便透气，耐脏易清洗，容量大', 15, 1.0);
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (6, '烧水壶', 65.00, '在售', '智能控温，漏电保护，溢出断点保护', 7, 1.2);
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (7, '一次性外科医用口罩', 1.50, '在售', '隔绝病菌，健康生活', 400, 0.1);
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (8, '电饭煲', 399.00, '在售', '气密好，多功能，智能控温预约，断点保护', 8, 2.3);
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (9, 'Roland Xps-10', 3400.00, '在售', '多音色合成键盘，满足音乐需求，丰富生活情趣', 4, 12.0);
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (10, '罐装旺仔牛奶', 39.00, '在售', '还是童年的美味，健康营养', 30, 3.5);
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (11, '儿童学步车', 239.00, '在售', '让宝宝赢在起跑线上', 5, 4.5);
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (12, '扫地机器人', 1599.00, '在售', '解放双手也能保持地板干净明亮', 4, 2.3);
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (13, '智能手机', 4699.00, '在售', '就是你想买的那一台手机', 5, 0.2);
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (14, 'DIY油画', 69.00, '在售', '来图定制属于你自己的大师之作', 16, 1.6);
+INSERT INTO `goods`(`goods_id`, `goods_name`, `price`, `on_sale`, `detail`, `count`, `weight`) VALUES (15, '智能吹风机', 699.00, '在售', '智能控温，防止伤发', 10, 0.8);
